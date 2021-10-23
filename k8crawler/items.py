@@ -5,8 +5,7 @@
 
 import scrapy
 
-
-class K8CrawlerItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
+class raceDate(scrapy.Item):
+    year = scrapy.Field()
+    month = scrapy.Field()
+    dates = scrapy.Field()

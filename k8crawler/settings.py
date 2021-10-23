@@ -17,7 +17,7 @@ NEWSPIDER_MODULE = 'k8crawler.spiders'
 #USER_AGENT = 'k8crawler (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
-ROBOTSTXT_OBEY = True
+ROBOTSTXT_OBEY = False
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
@@ -25,13 +25,15 @@ ROBOTSTXT_OBEY = True
 # Configure a delay for requests for the same website (default: 0)
 # See https://docs.scrapy.org/en/latest/topics/settings.html#download-delay
 # See also autothrottle settings and docs
-#DOWNLOAD_DELAY = 3
+DOWNLOAD_DELAY = 2
 # The download delay setting will honor only one of:
 #CONCURRENT_REQUESTS_PER_DOMAIN = 16
 #CONCURRENT_REQUESTS_PER_IP = 16
+# random delay
+RANDOMIZE_DOWNLOAD_DELAY = True
 
 # Disable cookies (enabled by default)
-#COOKIES_ENABLED = False
+COOKIES_ENABLED = False
 
 # Disable Telnet Console (enabled by default)
 #TELNETCONSOLE_ENABLED = False
@@ -62,9 +64,10 @@ ROBOTSTXT_OBEY = True
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    'k8crawler.pipelines.K8CrawlerPipeline': 300,
-#}
+ITEM_PIPELINES = {
+    'k8crawler.pipelines.ValidationPipeline': 100,
+    'k8crawler.pipelines.SqlitePipeline': 200,
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
@@ -86,3 +89,6 @@ ROBOTSTXT_OBEY = True
 #HTTPCACHE_DIR = 'httpcache'
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+
+# sqlte setting
+SQLITE_PATH = './sqlite/k8.db'
