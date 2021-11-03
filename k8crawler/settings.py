@@ -90,5 +90,8 @@ ITEM_PIPELINES = {
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
-# sqlte setting
-SQLITE_PATH = './sqlite/k8.db'
+# mysql setting
+MYSQL_HOST = 'localhost'
+MYSQL_USER = 'admin'
+MYSQL_PASS = ''
+MYSQL_DATABASE = 'k8'

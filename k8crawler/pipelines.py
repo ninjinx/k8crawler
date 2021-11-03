@@ -6,7 +6,7 @@
 # useful for handling different item types with a single interface
 from k8crawler import settings
 import scrapy
-import sqlite3
+import pymysql
 
 # 値のバリデーションチェック
 class ValidationPipeline(object):
@@ -26,14 +26,18 @@ class ValidationPipeline(object):
 class SqlitePipeline(object):
     def open_spider(self, spider: scrapy.Spider):
         # コネクションの開始
-        self.conn = sqlite3.connect(settings.SQLITE_PATH)
+        self.con = pymysql.connect(host=settings.MYSQL_HOST,
+                                   user=settings.MYSQL_USER,
+                                   password=settings.MYSQL_PASS,
+                                   database=settings.MYSQL_DATABASE,
+                                   cursorclass=pymysql.cursors.DictCursor)
 
     def close_spider(self, spider: scrapy.Spider):
         # コネクションの終了
-        self.conn.close()
+        self.con.close
 
     def process_item(self, item: scrapy.Item, spider: scrapy.Spider):
-        sql = "INSERT INTO race_date (date, year, month) VALUES (?, ?, ?)"
+        sql = "INSERT INTO race_date (date, year, month) VALUES (%s, %s, %s)"
 
         # データの作成
         insert_data_list = []
@@ -41,8 +45,10 @@ class SqlitePipeline(object):
             insert_data_list.append((date, item['year'], item['month']))
 
         # sqliteへインサート
-        curs = self.conn.cursor()
-        curs.executemany(sql, insert_data_list)
-        self.conn.commit()
+        with self.con.cursor() as cursor:
+            cursor.executemany(sql, insert_data_list)
+
+        # コミット
+        self.con.commit()
 
         return item

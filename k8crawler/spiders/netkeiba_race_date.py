@@ -2,7 +2,7 @@ from k8crawler import settings
 from ..items import raceDate
 import scrapy
 import datetime
-import sqlite3
+import pymysql
 import re
 
 # レース開催一覧ページのベースURL
@@ -17,7 +17,11 @@ class NetkeibaRaceDateSpider(scrapy.Spider):
 
     def __init__(self, page_limit=3):
         self.page_limit = page_limit
-        self.con = sqlite3.connect(settings.SQLITE_PATH)
+        self.con = pymysql.connect(host=settings.MYSQL_HOST,
+                                   user=settings.MYSQL_USER,
+                                   password=settings.MYSQL_PASS,
+                                   database=settings.MYSQL_DATABASE,
+                                   cursorclass=pymysql.cursors.DictCursor)
 
     def __del__(self):
         self.con.close
@@ -36,7 +40,9 @@ class NetkeibaRaceDateSpider(scrapy.Spider):
     def get_init_date(self):
         # 保存済みレコードから最新のものを取得
         sql = "SELECT year, month FROM race_date order by date DESC limit 1"
-        race_date_max = self.con.execute(sql).fetchone()
+        with self.con.cursor() as cursor:
+            cursor.execute(sql)
+            race_date_max = cursor.fetchone()
 
         # 初期値の取得
         init_year = INIT_YEAR
@@ -44,7 +50,7 @@ class NetkeibaRaceDateSpider(scrapy.Spider):
 
         # レコードが存在すれば次月から取得
         if race_date_max:
-            init_year, init_month = self.add_month(race_date_max[0], race_date_max[1], 1)
+            init_year, init_month = self.add_month(race_date_max['year'], race_date_max['month'], 1)
 
         return init_year, init_month
 
