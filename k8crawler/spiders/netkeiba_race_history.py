@@ -214,7 +214,7 @@ class NetkeibaRaceHistorySpider(scrapy.Spider):
         elif (index == 6):
             jockey_id = 0
             search_res = re.search(r'\d+', result_column.css('a::attr(href)').get())
-            if not search_res is None:
+            if search_res:
                 jockey_id = search_res.group()
             result_data['jockey_id'] = jockey_id
         elif (index == 7):
@@ -224,14 +224,23 @@ class NetkeibaRaceHistorySpider(scrapy.Spider):
         elif (index == 8):
             pass
         elif (index == 9):
-            result_data['popularity'] = result_column.xpath(
-                'span/text()').get()
+            popularity = 0
+            search_res = result_column.xpath('span/text()').get()
+            if search_res:
+                popularity = search_res
+            result_data['popularity'] = popularity
         elif (index == 10):
-            result_data['odds'] = ''.join(
-                result_column.xpath('span/text()').get().split('.'))
+            odds = 0
+            search_res = result_column.xpath('span/text()').get()
+            if search_res:
+                odds = ''.join(search_res.split('.'))
+            result_data['odds'] = odds
         elif (index == 11):
-            result_data['last_3f'] = ''.join(
-                result_column.xpath('text()').get().split('.')).strip()
+            last_3f = 0
+            search_res = result_column.xpath('text()').get().strip()
+            if search_res:
+                last_3f = ''.join(search_res.split('.')).strip()
+            result_data['last_3f'] = last_3f
         elif (index == 12):
             pass
         elif (index == 13):
@@ -239,7 +248,7 @@ class NetkeibaRaceHistorySpider(scrapy.Spider):
                 result_column.xpath('span/text()').get())
             trainer_id = 0
             search_result = re.search(r'\d+', result_column.css('a::attr(href)').get())
-            if not search_result is None:
+            if search_result:
                 trainer_id = search_result.group()
             result_data['trainer_id'] = trainer_id
         elif (index == 14):

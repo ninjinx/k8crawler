@@ -157,9 +157,18 @@ class MysqlPipeline(object):
             race_result_keys) + ') VALUES (' + ', '.join(['%s' for _ in race_result_keys]) + ')'
 
         # mysqlへインサート
+        race_info_exist_sql = 'SELECT race_id FROM race_info where race_id = %s limit 1'
+        race_result_exist_sql = 'SELECT race_id FROM race_horse_result where race_id = %s limit 1'
         with self.con.cursor() as cursor:
-            cursor.execute(race_info_sql, race_info_values)
-            cursor.executemany(race_result_sql, race_result_values)
+            # レース情報のインサート処理
+            cursor.execute(race_info_exist_sql, race_id)
+            if not cursor.fetchone():
+                cursor.execute(race_info_sql, race_info_values)
+
+            # レース結果のインサート処理
+            cursor.execute(race_result_exist_sql, race_id)
+            if not cursor.fetchone():
+                cursor.executemany(race_result_sql, race_result_values)
 
         # コミット
         self.con.commit()
