@@ -11,6 +11,7 @@ RACE_DATE_URL_BASE = "https://race.netkeiba.com/top/calendar.html?"
 INIT_YEAR = 2008
 INIT_MONTH = 1
 
+
 class NetkeibaRaceDateSpider(scrapy.Spider):
     name = 'netkeiba_race_date'
     allowed_domains = ['www.netkeiba.com/']
@@ -50,13 +51,15 @@ class NetkeibaRaceDateSpider(scrapy.Spider):
 
         # レコードが存在すれば次月から取得
         if race_date_max:
-            init_year, init_month = self.add_month(race_date_max['year'], race_date_max['month'], 1)
+            init_year, init_month = self.add_month(
+                race_date_max['year'], race_date_max['month'], 1)
 
         return init_year, init_month
 
     def start_requests(self):
         # 現在の年月日を取得
-        now = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=9)))
+        now = datetime.datetime.now(
+            datetime.timezone(datetime.timedelta(hours=9)))
 
         # 保存済みレコードの最新値取得
         year, month = self.get_init_date()
@@ -77,7 +80,6 @@ class NetkeibaRaceDateSpider(scrapy.Spider):
             # 月の加算
             year, month = self.add_month(year, month, 1)
 
-
     def parse(self, response):
         # 年月を取得
         nums = re.findall(r'\d+', response.url)
@@ -92,7 +94,8 @@ class NetkeibaRaceDateSpider(scrapy.Spider):
         for box in raceKaisaiBoxes:
             if box.css("span.JyoName::text").getall():
                 day = box.css("span.Day::text").get()
-                race_dates.append('{:0>4}{:0>2}{:0>2}'.format(year, month, day))
+                race_dates.append(
+                    '{:0>4}{:0>2}{:0>2}'.format(year, month, day))
 
         # レース日の返却
         yield raceDate(year=year, month=month, dates=race_dates)

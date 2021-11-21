@@ -1,10 +1,10 @@
 {
   "canvas": {
-    "version": "2.2.6",
+    "version": "2.2.10",
     "width": 2000,
     "height": 2000,
-    "scrollTop": 0,
-    "scrollLeft": 0,
+    "scrollTop": -146,
+    "scrollLeft": -53,
     "zoomLevel": 1,
     "show": {
       "tableComment": true,
@@ -19,7 +19,7 @@
     },
     "database": "MySQL",
     "databaseName": "k8",
-    "canvasType": "@vuerd/builtin-sql-ddl",
+    "canvasType": "ERD",
     "language": "GraphQL",
     "tableCase": "pascalCase",
     "columnCase": "camelCase",
@@ -27,6 +27,7 @@
     "bracketType": "none",
     "setting": {
       "relationshipDataTypeSync": true,
+      "relationshipOptimization": false,
       "columnOrder": [
         "columnName",
         "columnDataType",
@@ -142,7 +143,7 @@
           "active": false,
           "left": 85.6667,
           "top": 0,
-          "zIndex": 3,
+          "zIndex": 1,
           "widthName": 64.77197265625,
           "widthComment": 120
         },
@@ -156,7 +157,7 @@
           {
             "name": "race_id",
             "comment": "管理ID（レース日程+会場ID+レース番号）",
-            "dataType": "INT",
+            "dataType": "BIGINT",
             "default": "",
             "option": {
               "autoIncrement": false,
@@ -190,7 +191,7 @@
             "ui": {
               "active": false,
               "pk": false,
-              "fk": true,
+              "fk": false,
               "pfk": false,
               "widthName": 60,
               "widthComment": 80,
@@ -269,7 +270,7 @@
             "id": "c0245f84-388c-4850-99b1-7cf1e7d99e61"
           },
           {
-            "name": "length",
+            "name": "distance",
             "comment": "距離",
             "dataType": "INT",
             "default": "",
@@ -407,8 +408,8 @@
             "id": "3c2ffa9a-e023-4dfc-a751-68b970612662"
           },
           {
-            "name": "race_condition",
-            "comment": "レース条件",
+            "name": "mare_only_flag",
+            "comment": "牝馬限定フラグ",
             "dataType": "INT",
             "default": "",
             "option": {
@@ -422,16 +423,16 @@
               "pk": false,
               "fk": false,
               "pfk": false,
-              "widthName": 94.42822265625,
-              "widthComment": 67,
+              "widthName": 100.6044921875,
+              "widthComment": 93,
               "widthDataType": 60,
               "widthDefault": 60
             },
             "id": "2cb2643f-7b08-4fb2-8bbb-703d1a2b46cd"
           },
           {
-            "name": "age",
-            "comment": "馬齢",
+            "name": "age_condition",
+            "comment": "馬齢条件",
             "dataType": "INT",
             "default": "",
             "option": {
@@ -445,7 +446,7 @@
               "pk": false,
               "fk": false,
               "pfk": false,
-              "widthName": 60,
+              "widthName": 90.54345703125,
               "widthComment": 60,
               "widthDataType": 60,
               "widthDefault": 60
@@ -453,7 +454,7 @@
             "id": "736034f7-948e-4e62-b471-5f22bb5f75b2"
           },
           {
-            "name": "class",
+            "name": "class_id",
             "comment": "クラス",
             "dataType": "INT",
             "default": "",
@@ -474,13 +475,36 @@
               "widthDefault": 60
             },
             "id": "98df57b6-212c-4c79-b787-e89e02a57385"
+          },
+          {
+            "name": "race_name",
+            "comment": "レース名",
+            "dataType": "VARCHAR(128)",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": false
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 72.4462890625,
+              "widthComment": 60,
+              "widthDataType": 99.9189453125,
+              "widthDefault": 60
+            },
+            "id": "24759ad2-a205-4edf-81b9-50f8e37f00d8"
           }
         ],
         "ui": {
-          "active": false,
-          "left": 59.4439,
-          "top": 243.4455,
-          "zIndex": 22,
+          "active": true,
+          "left": 62.4439,
+          "top": 228.4455,
+          "zIndex": 28,
           "widthName": 60.3095703125,
           "widthComment": 120
         },
@@ -494,7 +518,7 @@
           {
             "name": "horse_id",
             "comment": "競走馬ID（netkeiba準拠）",
-            "dataType": "INT",
+            "dataType": "VARCHAR(128)",
             "default": "",
             "option": {
               "autoIncrement": false,
@@ -509,7 +533,7 @@
               "pfk": false,
               "widthName": 60,
               "widthComment": 120,
-              "widthDataType": 60,
+              "widthDataType": 99.9189453125,
               "widthDefault": 60
             },
             "id": "c894a9fc-f090-4bb3-b8d7-0449b1d82c4b"
@@ -517,7 +541,7 @@
           {
             "name": "name",
             "comment": "名前",
-            "dataType": "INT",
+            "dataType": "VARCHAR(128)",
             "default": "",
             "option": {
               "autoIncrement": false,
@@ -532,7 +556,7 @@
               "pfk": false,
               "widthName": 60,
               "widthComment": 60,
-              "widthDataType": 60,
+              "widthDataType": 99.9189453125,
               "widthDefault": 60
             },
             "id": "137c7851-b18b-4866-8c60-63fe50bb7b65"
@@ -561,6 +585,29 @@
             "id": "ed84108c-0a3f-42f1-90d6-45a144ae4146"
           },
           {
+            "name": "sex",
+            "comment": "性別（牡・牝・騙）",
+            "dataType": "INT",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": false
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 119,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "d86ed58a-3c1b-4a7d-8182-a8b9cd1574b1"
+          },
+          {
             "name": "home",
             "comment": "産地",
             "dataType": "VARCHAR(128)",
@@ -584,9 +631,9 @@
             "id": "c495e925-ee52-44c2-9f2a-3289acc49aac"
           },
           {
-            "name": "farm",
-            "comment": "生産牧場",
-            "dataType": "VARCHAR(128)",
+            "name": "breeder_id",
+            "comment": "生産牧場ID（netkeiba準拠）",
+            "dataType": "INT",
             "default": "",
             "option": {
               "autoIncrement": false,
@@ -599,17 +646,17 @@
               "pk": false,
               "fk": false,
               "pfk": false,
-              "widthName": 60,
-              "widthComment": 60,
-              "widthDataType": 99.9189453125,
+              "widthName": 70.3515625,
+              "widthComment": 120,
+              "widthDataType": 60,
               "widthDefault": 60
             },
             "id": "f172a879-5bd4-4f3e-9cb4-9bb6533a77e9"
           },
           {
-            "name": "owner",
-            "comment": "馬主",
-            "dataType": "VARCHAR(128)",
+            "name": "owner_id",
+            "comment": "馬主ID（netkeiba準拠）",
+            "dataType": "INT",
             "default": "",
             "option": {
               "autoIncrement": false,
@@ -622,9 +669,9 @@
               "pk": false,
               "fk": false,
               "pfk": false,
-              "widthName": 60,
-              "widthComment": 60,
-              "widthDataType": 99.9189453125,
+              "widthName": 60.7412109375,
+              "widthComment": 120,
+              "widthDataType": 60,
               "widthDefault": 60
             },
             "id": "9758001f-fb4b-4e0a-bd69-5903def240e5"
@@ -653,10 +700,33 @@
             "id": "8f812bc7-f62d-4e6b-8668-e53c01e14b9a"
           },
           {
-            "name": "trainer",
-            "comment": "調教師",
-            "dataType": "VARCHAR(128)",
+            "name": "trainer_id",
+            "comment": "調教師ID（netkeiba準拠）",
+            "dataType": "INT",
             "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": false
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 63.14697265625,
+              "widthComment": 120,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "630bc792-2980-436d-a0ce-dee789860b3d"
+          },
+          {
+            "name": "father_id",
+            "comment": "父",
+            "dataType": "VARCHAR(128)",
+            "default": "0",
             "option": {
               "autoIncrement": false,
               "primaryKey": false,
@@ -673,35 +743,12 @@
               "widthDataType": 99.9189453125,
               "widthDefault": 60
             },
-            "id": "630bc792-2980-436d-a0ce-dee789860b3d"
-          },
-          {
-            "name": "father_id",
-            "comment": "父",
-            "dataType": "INT",
-            "default": "0",
-            "option": {
-              "autoIncrement": false,
-              "primaryKey": false,
-              "unique": false,
-              "notNull": false
-            },
-            "ui": {
-              "active": false,
-              "pk": false,
-              "fk": false,
-              "pfk": false,
-              "widthName": 60,
-              "widthComment": 60,
-              "widthDataType": 60,
-              "widthDefault": 60
-            },
             "id": "2eb9a917-4f07-4ff4-9aec-f81ff7095ba6"
           },
           {
             "name": "mother_id",
             "comment": "母",
-            "dataType": "INT",
+            "dataType": "VARCHAR(128)",
             "default": "0",
             "option": {
               "autoIncrement": false,
@@ -716,7 +763,7 @@
               "pfk": false,
               "widthName": 67.31103515625,
               "widthComment": 60,
-              "widthDataType": 60,
+              "widthDataType": 99.9189453125,
               "widthDefault": 60
             },
             "id": "5dabe8dd-6b52-47b6-be8f-5e99a9372f2d"
@@ -724,9 +771,9 @@
         ],
         "ui": {
           "active": false,
-          "left": 1191.8891,
-          "top": 283.6665,
-          "zIndex": 20,
+          "left": 1152.8891,
+          "top": 260.6665,
+          "zIndex": 5,
           "widthName": 103.486328125,
           "widthComment": 67
         },
@@ -740,7 +787,7 @@
           {
             "name": "race_id",
             "comment": "管理ID（レース日程+会場ID+レース番号）",
-            "dataType": "INT",
+            "dataType": "BIGINT",
             "default": "",
             "option": {
               "autoIncrement": false,
@@ -750,9 +797,9 @@
             },
             "ui": {
               "active": false,
-              "pk": false,
+              "pk": true,
               "fk": false,
-              "pfk": true,
+              "pfk": false,
               "widthName": 60,
               "widthComment": 120,
               "widthDataType": 60,
@@ -809,7 +856,7 @@
           {
             "name": "horse_id",
             "comment": "競走馬ID（netkeiba準拠）",
-            "dataType": "INT",
+            "dataType": "VARCHAR(128)",
             "default": "",
             "option": {
               "autoIncrement": false,
@@ -820,11 +867,11 @@
             "ui": {
               "active": false,
               "pk": false,
-              "fk": true,
+              "fk": false,
               "pfk": false,
               "widthName": 60,
               "widthComment": 120,
-              "widthDataType": 60,
+              "widthDataType": 99.9189453125,
               "widthDefault": 60
             },
             "id": "f3d0a9da-debc-4c34-9931-8156aaddcf01"
@@ -923,7 +970,7 @@
           },
           {
             "name": "weight",
-            "comment": "斤量",
+            "comment": "斤量（kg*10）",
             "dataType": "INT",
             "default": "",
             "option": {
@@ -938,7 +985,7 @@
               "fk": false,
               "pfk": false,
               "widthName": 60,
-              "widthComment": 60,
+              "widthComment": 93.279296875,
               "widthDataType": 60,
               "widthDefault": 60
             },
@@ -946,7 +993,7 @@
           },
           {
             "name": "odds",
-            "comment": "オッズ",
+            "comment": "オッズ（odds*10）",
             "dataType": "INT",
             "default": "",
             "option": {
@@ -961,7 +1008,7 @@
               "fk": false,
               "pfk": false,
               "widthName": 60,
-              "widthComment": 60,
+              "widthComment": 120,
               "widthDataType": 60,
               "widthDefault": 60
             },
@@ -992,7 +1039,7 @@
           },
           {
             "name": "time",
-            "comment": "タイム",
+            "comment": "タイム（秒*10）",
             "dataType": "INT",
             "default": "",
             "option": {
@@ -1007,7 +1054,7 @@
               "fk": false,
               "pfk": false,
               "widthName": 60,
-              "widthComment": 60,
+              "widthComment": 104.22265625,
               "widthDataType": 60,
               "widthDefault": 60
             },
@@ -1038,7 +1085,7 @@
           },
           {
             "name": "last_3f",
-            "comment": "上がり3F",
+            "comment": "上がり3F（秒*10）",
             "dataType": "INT",
             "default": "",
             "option": {
@@ -1053,16 +1100,16 @@
               "fk": false,
               "pfk": false,
               "widthName": 60,
-              "widthComment": 60,
+              "widthComment": 119.7236328125,
               "widthDataType": 60,
               "widthDefault": 60
             },
             "id": "a55a7855-8a81-40b5-8152-0ba16e41411c"
           },
           {
-            "name": "Jockey",
-            "comment": "騎手",
-            "dataType": "VARCHAR(128)",
+            "name": "jockey_id",
+            "comment": "騎手ID（netkeiba準拠）",
+            "dataType": "INT",
             "default": "",
             "option": {
               "autoIncrement": false,
@@ -1075,19 +1122,65 @@
               "pk": false,
               "fk": false,
               "pfk": false,
-              "widthName": 60,
-              "widthComment": 60,
-              "widthDataType": 99.9189453125,
+              "widthName": 61.77587890625,
+              "widthComment": 120,
+              "widthDataType": 60,
               "widthDefault": 60
             },
             "id": "ec2ccd12-fab6-4469-8fde-7c4967ce090b"
+          },
+          {
+            "name": "training_center",
+            "comment": "トレーニングセンター（美穂・栗東）",
+            "dataType": "INT",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": false
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 98.2177734375,
+              "widthComment": 120,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "4b6896a2-d318-41bf-b3ac-6b989cb41cd9"
+          },
+          {
+            "name": "trainer_id",
+            "comment": "調教師ID（netkeiba準拠）",
+            "dataType": "INT",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": false
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 63.14697265625,
+              "widthComment": 120,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "0bbda7cd-f11d-4a2c-9c3d-6bb17ecb1299"
           }
         ],
         "ui": {
           "active": false,
-          "left": 612.9996,
-          "top": 228.2223,
-          "zIndex": 9,
+          "left": 604.9996,
+          "top": 221.2223,
+          "zIndex": 27,
           "widthName": 115.68017578125,
           "widthComment": 120
         },
@@ -1103,9 +1196,9 @@
         "value": "レース条件・参考資料\nhttps://db.netkeiba.com/?pid=race_search_detail",
         "ui": {
           "active": false,
-          "left": 59.444444444443455,
-          "top": 608.2222222222231,
-          "zIndex": 5,
+          "left": 58.44444444444346,
+          "top": 629.2222222222231,
+          "zIndex": 2,
           "width": 196,
           "height": 100
         },
@@ -1114,85 +1207,6 @@
     ]
   },
   "relationship": {
-    "relationships": [
-      {
-        "identification": false,
-        "relationshipType": "OneN",
-        "startRelationshipType": "Dash",
-        "start": {
-          "tableId": "4775b786-c346-4ddf-bcb3-23d747faa46e",
-          "columnIds": [
-            "6955c9c0-154a-4092-a37d-1a1436f00134"
-          ],
-          "x": 289.1667,
-          "y": 151,
-          "direction": "bottom"
-        },
-        "end": {
-          "tableId": "0eb7d464-b30b-43d6-b8ef-f196f32a1d3a",
-          "columnIds": [
-            "0b9d3113-1178-4b71-a226-0386f158c172"
-          ],
-          "x": 289.228812109375,
-          "y": 243.4455,
-          "direction": "top"
-        },
-        "constraintName": "fk_race_date_to_race_info",
-        "visible": true,
-        "id": "a8be2aee-b6c2-47b2-978f-36250a78eb7c"
-      },
-      {
-        "identification": true,
-        "relationshipType": "OneN",
-        "startRelationshipType": "Dash",
-        "start": {
-          "tableId": "0eb7d464-b30b-43d6-b8ef-f196f32a1d3a",
-          "columnIds": [
-            "263ade6b-9409-47fb-8422-59ddb667b3ac"
-          ],
-          "x": 519.01372421875,
-          "y": 421.44550000000004,
-          "direction": "right"
-        },
-        "end": {
-          "tableId": "760f08b3-ca25-4134-994b-fd0de164d92f",
-          "columnIds": [
-            "5bb0192d-2421-46ca-9400-1c1bd22d32d7"
-          ],
-          "x": 612.9996,
-          "y": 416.4723,
-          "direction": "left"
-        },
-        "constraintName": "fk_race_info_to_race_horse_result",
-        "visible": true,
-        "id": "29ca6942-e000-489f-a878-27ef55f141c4"
-      },
-      {
-        "identification": false,
-        "relationshipType": "OneN",
-        "startRelationshipType": "Dash",
-        "start": {
-          "tableId": "e37ff575-7dc5-4e4c-804b-2feaf54ca5d1",
-          "columnIds": [
-            "c894a9fc-f090-4bb3-b8d7-0449b1d82c4b"
-          ],
-          "x": 1191.8891,
-          "y": 420.6665,
-          "direction": "left"
-        },
-        "end": {
-          "tableId": "760f08b3-ca25-4134-994b-fd0de164d92f",
-          "columnIds": [
-            "f3d0a9da-debc-4c34-9931-8156aaddcf01"
-          ],
-          "x": 1115.58602578125,
-          "y": 416.4723,
-          "direction": "right"
-        },
-        "constraintName": "fk_race_horse_info_to_race_horse_result",
-        "visible": true,
-        "id": "e57136fb-1cad-4909-bf18-68e068481398"
-      }
-    ]
+    "relationships": []
   }
 }

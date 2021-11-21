@@ -130,3 +130,6 @@ dmypy.json
 
 # ignore sqlite
 .sqlite
+
+# ignore vscode
+.vscode
