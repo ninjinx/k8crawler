@@ -8,7 +8,7 @@ import re
 # レース開催一覧ページのベースURL
 RACE_DATE_URL_BASE = "https://race.netkeiba.com/top/calendar.html?"
 # 開催年月初期値
-INIT_YEAR = 2008
+INIT_YEAR = 2011
 INIT_MONTH = 1
 
 

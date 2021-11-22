@@ -61,3 +61,7 @@ class HorseInfo(scrapy.Item):
     trainer_id = scrapy.Field()
     father_id = scrapy.Field()
     mother_id = scrapy.Field()
+    father_father_id = scrapy.Field()
+    father_mother_id = scrapy.Field()
+    mother_father_id = scrapy.Field()
+    mother_mother_id = scrapy.Field()

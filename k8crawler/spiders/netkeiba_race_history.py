@@ -209,8 +209,10 @@ class NetkeibaRaceHistorySpider(scrapy.Spider):
             result_data['sex'] = const.Sex.search(sex_age)
             result_data['age'] = re.search(r'\d+', sex_age).group()
         elif (index == 5):
-            result_data['weight'] = ''.join(
-                result_column.xpath('div/span/text()').get().split('.'))
+            weight = ''.join(result_column.xpath('div/span/text()').get().split('.'))
+            if not weight.isdecimal():
+                weight = 0
+            result_data['weight'] = weight
         elif (index == 6):
             jockey_id = 0
             search_res = re.search(r'\d+', result_column.css('a::attr(href)').get())
@@ -254,8 +256,11 @@ class NetkeibaRaceHistorySpider(scrapy.Spider):
         elif (index == 14):
             result_data['horse_weight'] = result_column.xpath(
                 'text()').get().strip()
-            result_data['horse_weight_diff'] = result_column.xpath(
-                'small/text()').get()[1:-1]
+            horse_weight_diff = 0
+            search_res = result_column.xpath('small/text()').get()
+            if search_res:
+                horse_weight_diff = search_res[1:-1]
+            result_data['horse_weight_diff'] = horse_weight_diff
 
     def parse_race_horse(self, response):
         # itemの生成
@@ -290,8 +295,16 @@ class NetkeibaRaceHistorySpider(scrapy.Spider):
         blood_data_list = response.xpath(
             '//table[@class="blood_table"]/tr')
         horse_info['father_id'] = blood_data_list[0].css(
+            'a::attr(href)').getall()[0].split('/')[-2]
+        horse_info['father_father_id'] = blood_data_list[0].css(
+            'a::attr(href)').getall()[1].split('/')[-2]
+        horse_info['father_mother_id'] = blood_data_list[1].css(
             'a::attr(href)').get().split('/')[-2]
         horse_info['mother_id'] = blood_data_list[2].css(
+            'a::attr(href)').getall()[0].split('/')[-2]
+        horse_info['mother_father_id'] = blood_data_list[2].css(
+            'a::attr(href)').getall()[1].split('/')[-2]
+        horse_info['mother_mother_id'] = blood_data_list[3].css(
             'a::attr(href)').get().split('/')[-2]
 
         # 競走馬情報の保存
