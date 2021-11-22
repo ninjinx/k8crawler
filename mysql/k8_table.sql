@@ -9,17 +9,21 @@ CREATE TABLE race_date
 
 CREATE TABLE race_horse_info
 (
-  horse_id        VARCHAR(128) NOT NULL COMMENT '競走馬ID（netkeiba準拠）',
-  name            VARCHAR(128) NULL     COMMENT '名前',
-  birthday        INT          NULL     COMMENT '誕生日',
-  sex             INT          NULL     COMMENT '性別（牡・牝・騙）',
-  home            VARCHAR(128) NULL     COMMENT '産地',
-  breeder_id      INT          NULL     COMMENT '生産牧場ID（netkeiba準拠）',
-  owner_id        INT          NULL     COMMENT '馬主ID（netkeiba準拠）',
-  training_center INT          NULL     COMMENT 'トレーニングセンター（美穂・栗東）',
-  trainer_id      INT          NULL     COMMENT '調教師ID（netkeiba準拠）',
-  father_id       VARCHAR(128) NULL     DEFAULT 0 COMMENT '父',
-  mother_id       VARCHAR(128) NULL     DEFAULT 0 COMMENT '母',
+  horse_id         VARCHAR(128) NOT NULL COMMENT '競走馬ID（netkeiba準拠）',
+  name             VARCHAR(128) NULL     COMMENT '名前',
+  birthday         INT          NULL     COMMENT '誕生日',
+  sex              INT          NULL     COMMENT '性別（牡・牝・騙）',
+  home             VARCHAR(128) NULL     COMMENT '産地',
+  breeder_id       INT          NULL     COMMENT '生産牧場ID（netkeiba準拠）',
+  owner_id         INT          NULL     COMMENT '馬主ID（netkeiba準拠）',
+  training_center  INT          NULL     COMMENT 'トレーニングセンター（美穂・栗東）',
+  trainer_id       INT          NULL     COMMENT '調教師ID（netkeiba準拠）',
+  father_id        VARCHAR(128) NULL     DEFAULT 0 COMMENT '父',
+  mother_id        VARCHAR(128) NULL     DEFAULT 0 COMMENT '母',
+  father_father_id VARCHAR(128) NULL     DEFAULT 0 COMMENT '父父',
+  father_mother_id VARCHAR(128) NULL     DEFAULT 0 COMMENT '父母',
+  mother_father_id VARCHAR(128) NULL     DEFAULT 0 COMMENT '母父',
+  mother_mother_id VARCHAR(128) NULL     DEFAULT 0 COMMENT '母母',
   PRIMARY KEY (horse_id)
 ) COMMENT '競走馬情報';
 
