@@ -172,7 +172,7 @@ class NetkeibaRaceHistorySpider(scrapy.Spider):
         race_info['class_id'] = self.get_class_by_response(
             race_data_02, race_name_span)
         isMareOnly = 0
-        if len(race_data_02) >= 5:
+        if len(race_data_02) >= 6:
             isMareOnly = const.Sex.search(race_data_02[5]) == const.Sex.SEX_MARE
         race_info['mare_only_flag'] = int(isMareOnly)
 
