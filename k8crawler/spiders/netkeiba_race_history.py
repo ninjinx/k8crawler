@@ -31,7 +31,10 @@ class NetkeibaRaceHistorySpider(scrapy.Spider):
         sql = "SELECT date FROM race_date where is_get = 0 limit 1"
         with self.con.cursor() as cursor:
             cursor.execute(sql)
-            return cursor.fetchone()['date']
+            record = cursor.fetchone()
+            if record:
+                return record['date']
+            return None
 
     def exists_horse(self, horse_id):
         # 保存済みレコードから未取得のものを取得
@@ -168,7 +171,9 @@ class NetkeibaRaceHistorySpider(scrapy.Spider):
         race_info['age_condition'] = const.AgeCondition.search(race_data_02[3])
         race_info['class_id'] = self.get_class_by_response(
             race_data_02, race_name_span)
-        isMareOnly = const.Sex.search(race_data_02[5]) == const.Sex.SEX_MARE
+        isMareOnly = 0
+        if len(race_data_02) >= 5:
+            isMareOnly = const.Sex.search(race_data_02[5]) == const.Sex.SEX_MARE
         race_info['mare_only_flag'] = int(isMareOnly)
 
         # レース情報の返却
@@ -215,9 +220,11 @@ class NetkeibaRaceHistorySpider(scrapy.Spider):
             result_data['weight'] = weight
         elif (index == 6):
             jockey_id = 0
-            search_res = re.search(r'\d+', result_column.css('a::attr(href)').get())
-            if search_res:
-                jockey_id = search_res.group()
+            jockey_url = result_column.css('a::attr(href)').get()
+            if jockey_url:
+                search_res = re.search(r'\d+', jockey_url)
+                if search_res:
+                    jockey_id = search_res.group()
             result_data['jockey_id'] = jockey_id
         elif (index == 7):
             min, sec = result_column.xpath('span/text()').get().split(':')
